@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}
+Register
+{% endblock %}
+{% block content %}
+<h3>Thank you!</h3>
+<form action="/twitter_id/" method="post">
+<label for="twitter_id"> To complete your registration please enter your Twitter id: </label> </br> <input type="text" size=30 /> </br>
+{% csrf_token %}
+
+<input type="submit" value="register" />
+<input type="hidden" name="next" value="/" />
+</form>
+{% endblock %}
+
+

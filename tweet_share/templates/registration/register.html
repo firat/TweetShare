@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}
+Register
+{% endblock %}
+{% block content %}
+<h3>User Registration</h3>
+{% if form.has_errors %}
+<p>Please try again.</p>
+{% endif %}
+<form action="/accounts/register/submit/" method="post">
+{{ form.as_p }}
+{% csrf_token %} 
+<input type="submit" value="Register" />
+<input type="hidden" name="next" value="{{ next_url }}" />
+</form>
+{% endblock %}

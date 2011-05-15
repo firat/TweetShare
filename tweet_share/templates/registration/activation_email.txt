@@ -1,0 +1,5 @@
+
+
+http://knuth.cs.bilgi.edu.tr:1080/accounts/activate/{{ activation_key }}
+
+Expires in {{ expiration_days }} days.

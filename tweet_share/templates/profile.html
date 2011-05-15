@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load comments %}
+{% block title %}
+Profile
+{% endblock %}
+{% block content %}
+<h3> {{ user.get_profile.get_display_name }} (<a href="http://twitter.com/{{ user.get_profile.twitter_id }}" title="{{ user.get_profile.twitter_id }} on Twitter."> @{{ user.get_profile.twitter_id }})</a></h3>
+<img src="{{ user.get_profile.get_photo_src }}" alt="{{ user.get_profile.twitter_id }}'s picture." />
+<div class="requests">
+{% for request in user.get_profile.get_requests %}
+	<div class="request">
+	<a href="/users/{{ request.req_from.username }}"><img src="{{ request.req_from.get_profile.get_photo_src }}" alt="{{ request.req_from.get_profile.get_display_name }}" /><br/>{{ request.req_from.get_profile.get_display_name }}</a>
+	<p><a href="/users/approve/{{ request.id }}/" title="Approve {{request.req_from.get_profile.get_display_name}}'s request">Approve</a>
+	   <a href="/users/reject/{{ request.id }}/" title="Reject {{request.req_from.get_profile.get_display_name}}'s request">Reject</a>
+ 	   <a href="/users/ignore/{{ request.id }}/" title="Ignore {{request.req_from.get_profile.get_display_name}}'s request">Ignore</a></p>
+	</div>
+{% empty %}
+<p>There are no waiting friendship requests.</p>
+{% endfor %}
+</div>
+<div class="friends">
+{% for friend in user.get_profile.get_friends %}
+	<div class="friend">
+	<a href="/users/{{ friend.username }}"><img src="{{ friend.get_profile.get_photo_src }}" alt="{{ friend.get_profile.get_display_name }}" /><br/>{{ friend.get_profile.get_display_name }}</a>
+	</div>
+{% endfor %}
+</div>
+<div class="tweets"> 
+{% for tweet in user_tweets %}
+<div class="tweet">
+<p> {{ tweet.content }} <br/> <i><a href="http://twitter.com/{{ user.get_profile.twitter_id }}/status/{{ tweet.t_id }}" title="See this post on Twitter."> {{ tweet.datetime|date:"j M Y f A" }}</a></i> </p>
+<div class="comments">
+{% render_comment_list for tweet %}
+{% if can_comment_to_tweet %}
+{% render_comment_form for tweet %}
+{% endif %}
+<div>
+</div>
+{% endfor %}
+</div>
